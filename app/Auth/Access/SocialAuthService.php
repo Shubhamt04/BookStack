@@ -141,7 +141,7 @@ class SocialAuthService
         // When a user is not logged in and a matching SocialAccount exists,
         // Simply log the user into the application.
         if (!$isLoggedIn && $socialAccount !== null) {
-            $this->loginService->login($socialAccount->user, $socialAccount);
+            $this->loginService->login($socialAccount->user, $socialDriver);
 
             return redirect()->intended('/');
         }
@@ -280,9 +280,6 @@ class SocialAuthService
 
         if ($driverName === 'google' && config('services.google.select_account')) {
             $driver->with(['prompt' => 'select_account']);
-        }
-        if ($driverName === 'azure') {
-            $driver->with(['resource' => 'https://graph.windows.net']);
         }
 
         if (isset($this->configureForRedirectCallbacks[$driverName])) {

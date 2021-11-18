@@ -4,6 +4,7 @@ namespace BookStack\Entities\Models;
 
 use BookStack\Uploads\Image;
 use Exception;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,13 +13,18 @@ use Illuminate\Support\Collection;
 /**
  * Class Book.
  *
- * @property string     $description
- * @property int        $image_id
- * @property Image|null $cover
+ * @property string                                   $description
+ * @property int                                      $image_id
+ * @property Image|null                               $cover
+ * @property \Illuminate\Database\Eloquent\Collection $chapters
+ * @property \Illuminate\Database\Eloquent\Collection $pages
+ * @property \Illuminate\Database\Eloquent\Collection $directPages
  */
 class Book extends Entity implements HasCoverImage
 {
-    public $searchFactor = 2;
+    use HasFactory;
+
+    public $searchFactor = 1.2;
 
     protected $fillable = ['name', 'description'];
     protected $hidden = ['restricted', 'pivot', 'image_id', 'deleted_at'];
